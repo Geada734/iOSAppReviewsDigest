@@ -16,15 +16,20 @@ def create_dict(id: str) -> dict:
 
         data = response.json()["feed"]["entry"]
         reviews[str(i)] =  []
+        
+        invalid_date = False
 
         for review in data:
-            # Will comment now until new data is available so I can test
-            # review_date = review["updated"]["label"]
-            # if not check_date(review_date):
-            #     break
+            review_date = review["updated"]["label"]
+            if not check_date(review_date):
+                invalid_date = True
+                break
 
             # Add each review to the data response, sorted by page.
             reviews[str(i)].append(format_values(review))
+          
+        if invalid_date:
+            break
 
     return reviews
 
@@ -32,6 +37,7 @@ def create_dict(id: str) -> dict:
 def format_values(raw_review: dict):
     formatted_review = {
         "author": raw_review["author"]["name"]["label"],
+        "title": raw_review["title"]["label"],
         "content": raw_review["content"]["label"],
         "rating": raw_review["im:rating"]["label"],
         "date": format_date(raw_review["updated"]["label"])
@@ -45,11 +51,10 @@ def format_date(date: str) -> str:
 
 # Checks that the date is 24 hours or less ago
 def check_date(review_date: str) -> str:
-    date = datetime.fromisoformat(review_date).replace(tzinfo=timezone.utc)
-    yesterday = datetime.now(timezone.utc) - timedelta(hours=24)
-    print(yesterday)
-
-    if date < yesterday.date():
+    date = datetime.fromisoformat(review_date).replace(tzinfo=None)
+    yesterday = datetime.now() - timedelta(hours=30)
+    
+    if date < yesterday:
         return False
 
     return True
