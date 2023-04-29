@@ -52,7 +52,7 @@ def format_date(date: str) -> str:
 # Checks that the date is 24 hours or less ago
 def check_date(review_date: str) -> str:
     date = datetime.fromisoformat(review_date).replace(tzinfo=None)
-    yesterday = datetime.now() - timedelta(hours=30)
+    yesterday = datetime.now() - timedelta(hours=48)
     
     if date < yesterday:
         return False

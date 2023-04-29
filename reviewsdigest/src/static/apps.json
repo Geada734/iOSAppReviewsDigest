@@ -1,0 +1,14 @@
+{
+    "apps": [
+        {
+            "name": "Tiktok",
+            "id": "835599320",
+            "description": "Read what people are saying about the most downloaded app in the appstore!"
+        },
+        {
+            "name": "Facebook",
+            "id": "284882215",
+            "description": "Read about the social media platform who started it all! (Sorry MySpace)"
+        }
+    ]
+}

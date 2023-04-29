@@ -1,0 +1,12 @@
+.header {
+    margin-left: 60px;
+}
+
+.back {
+    margin-left: 60px;
+    text-decoration: underline;
+}
+
+.back:hover {
+    color: #ccc;
+}
