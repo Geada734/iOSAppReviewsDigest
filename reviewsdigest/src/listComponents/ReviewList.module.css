@@ -19,3 +19,7 @@
 .refresh:hover{
   color: #ccc
 }
+
+.paginationControler {
+    padding: 0 5%;
+}

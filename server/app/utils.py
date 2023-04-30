@@ -3,43 +3,44 @@ import json
 from datetime import datetime, timedelta, timezone
 
 '''Utility function to call the endpoints and create the response.'''
-def create_dict(id: str) -> list:
+def get_reviews(id: str, page: str) -> dict:
     reviews = []
+    next_page = True
+    response = call_rss_feed(id, page)
 
-    # The RSS feed can only go to ten pages, according to this error message:
-    # CustomerReviews RSS page depth is limited to 10
-    for i in range(1,  11): 
-        response = requests.get("https://itunes.apple.com/us/rss/customerreviews/id=" 
-                                + id + "/sortBy=mostRecent/page=" + str(i) + "/json")
+    if response.status_code != 200:
+        return []
 
-        print(response)
-        if response.status_code == 500:
+    data = response.json()["feed"]["entry"]
+
+    for review in data:
+        review_date = review["updated"]["label"]
+        if not check_date(review_date):
+            next_page = False
             break
 
-        data = response.json()["feed"]["entry"]
-        invalid_date = False
+        reviews.append(format_values(review))
 
-        for review in data:
-            review_date = review["updated"]["label"]
-            if not check_date(review_date):
-                invalid_date = True
-                break
+    if next_page:
+        next_response = call_rss_feed(id, str(int(page) + 1))
+        if next_response.status_code != 200:
+            next_page = False
 
-            # Add each review to the data response, sorted by page.
-            reviews.append(format_values(review))
+    # state_file = open("./store/state.json")
+    # state_data = json.load(state_file)
+    # state_file.close()
+    # state_data[id] = reviews
+    # state_file = open("./store/state.json", "w")
+    # json.dump(state_data, state_file)
+    # state_file.close()
 
-        if invalid_date:
-            break
+    return {"reviews": reviews, "nextPage": next_page}
 
-    state_file = open("./store/state.json")
-    state_data = json.load(state_file)
-    state_file.close()
-    state_data[id] = reviews
-    state_file = open("./store/state.json", "w")
-    json.dump(state_data, state_file)
-    state_file.close()
+def call_rss_feed(id: str, page: int) -> dict:
+    response = requests.get("https://itunes.apple.com/us/rss/customerreviews/id=" 
+                            + id + "/sortBy=mostRecent/page=" + str(page) + "/json")
 
-    return reviews
+    return response
 
 # Create a simpler json object to be processed by the UI
 def format_values(raw_review: dict):
