@@ -1,21 +1,22 @@
 import classes from './AppList.module.css'
-import AppCard from '../components/AppCard'
-import appsFile from '../static/apps.json'
-import React, { useState } from 'react'
 
 function AppList(props) {
-    const apps = appsFile.apps;
-    
+
+    function setFocused(event, appId){
+        props.focusAction(appId);
+    };
+
     return(
-        <ul className={classes.list}>
-            {apps.map(app => {
+        <div className={classes.list}>
+            <div className={classes.labelItem}>App: </div>
+            {props.apps.map(app => {
                 return (
-                    <li className = {classes.appItem} key={app.id}>
-                        <AppCard name={app.name} appId={app.id} description={app.description} focusAction={props.focusAction}/>
-                    </li>
+                    <div className={classes.appItem} key={app.id}>
+                        <span onClick={e => setFocused(e, app.id)}>{app.name}</span>
+                    </div>
                 );
             })}  
-        </ul>
+        </div>
     );
 };
 

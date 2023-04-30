@@ -1,7 +1,18 @@
-.appItem {
-    padding: 20px;
-  }
+.labelItem {
+  flex-basis: 5%;
+  flex-grow: 1;
+}
 
+.appItem {
+  text-decoration: underline; 
+  flex-basis: 5%;
+  flex-grow: 1;
+}
+
+.appItem:hover{
+  color: #ccc
+}
 .list {
-  list-style-type: none;
+  display: flex;
+  padding: 0 5%;
 }
