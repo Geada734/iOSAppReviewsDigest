@@ -1,0 +1,21 @@
+.header {
+    padding: 0 5%;
+}
+
+.reviewItem {
+    padding: 20px;
+}
+
+.reviewList {
+    list-style-type: none;
+    overflow: auto;
+}
+
+.refresh {
+    padding: 0 5%;
+    text-decoration: underline;
+}
+
+.refresh:hover{
+  color: #ccc
+}
