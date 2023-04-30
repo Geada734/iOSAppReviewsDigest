@@ -6,6 +6,7 @@ import appsFile from '../static/apps.json'
 function MainContainer() {
     const apps = appsFile.apps;
     const [focused, setFocused] = useState(apps[0].id);
+    const [page, setPage] = useState(1);
 
     function getAppName(appId){
         return apps.find(app => app.id === appId).name;
@@ -15,10 +16,10 @@ function MainContainer() {
         return(
         <div>
             <div>
-                <AppList focusAction={setFocused} apps={apps}/>
+                <AppList focusAction={setFocused} apps={apps} pagingAction={setPage}/>
             </div>
             <div>
-                <ReviewList appId={focused} appName={getAppName(focused)}/>
+                <ReviewList  page={page} appId={focused} appName={getAppName(focused)} paginationAction={setPage}/>
             </div>
         </div>);
     }
