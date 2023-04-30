@@ -1,5 +1,5 @@
 import json
-from utils import create_dict
+from utils import get_reviews
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS
@@ -14,8 +14,9 @@ class AppReviews(Resource):
         # 284882215 for facebook
         # 835599320 for tiktok
         app_id = request.args.get('app_id')
+        page = request.args.get('page')
         # Utility function to call the necessary endpoints.
-        response = create_dict(app_id)
+        response = get_reviews(app_id, page)
 
         return response
 
