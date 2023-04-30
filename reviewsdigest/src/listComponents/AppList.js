@@ -10,7 +10,7 @@ function AppList(props) {
         <ul className={classes.list}>
             {apps.map(app => {
                 return (
-                    <li className = {classes.appItem}>
+                    <li className = {classes.appItem} key={app.id}>
                         <AppCard name={app.name} appId={app.id} description={app.description} focusAction={props.focusAction}/>
                     </li>
                 );
