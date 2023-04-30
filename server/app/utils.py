@@ -1,22 +1,22 @@
 import requests
+import json
 from datetime import datetime, timedelta, timezone
 
 '''Utility function to call the endpoints and create the response.'''
-def create_dict(id: str) -> dict:
-    reviews = {"1": []}
+def create_dict(id: str) -> list:
+    reviews = []
 
     # The RSS feed can only go to ten pages, according to this error message:
     # CustomerReviews RSS page depth is limited to 10
-    for i in range(1, 11): 
+    for i in range(1,  11): 
         response = requests.get("https://itunes.apple.com/us/rss/customerreviews/id=" 
                                 + id + "/sortBy=mostRecent/page=" + str(i) + "/json")
 
-        if response == "<!-- Empty -->":
+        print(response)
+        if response.status_code == 500:
             break
 
         data = response.json()["feed"]["entry"]
-        reviews[str(i)] =  []
-        
         invalid_date = False
 
         for review in data:
@@ -26,10 +26,18 @@ def create_dict(id: str) -> dict:
                 break
 
             # Add each review to the data response, sorted by page.
-            reviews[str(i)].append(format_values(review))
-          
+            reviews.append(format_values(review))
+
         if invalid_date:
             break
+
+    state_file = open("./store/state.json")
+    state_data = json.load(state_file)
+    state_file.close()
+    state_data[id] = reviews
+    state_file = open("./store/state.json", "w")
+    json.dump(state_data, state_file)
+    state_file.close()
 
     return reviews
 
