@@ -48,20 +48,21 @@ def format_values(raw_review: dict):
         "title": raw_review["title"]["label"],
         "content": raw_review["content"]["label"],
         "rating": raw_review["im:rating"]["label"],
-        "date": format_date(raw_review["updated"]["label"])
+        "date": format_date(raw_review["updated"]["label"]),
+        "id": raw_review["id"]["label"]
     }
 
     return formatted_review
 
 # Formats the date to look nice.
 def format_date(date: str) -> str:
-    return date.split("T")[0] + " " + date.split("T")[1].split("-")[0] 
+    return date.split("T")[0] + " " + date.split("T")[1].split("-")[0] + " MT Time"
 
 # Checks that the date is 24 hours or less ago
 def check_date(review_date: str) -> str:
-    date = datetime.fromisoformat(review_date).replace(tzinfo=None)
-    yesterday = datetime.now() - timedelta(hours=48)
-    
+    date = datetime.fromisoformat(review_date).astimezone(timezone.utc)
+    yesterday = datetime.now(timezone.utc) - timedelta(hours=48)
+
     if date < yesterday:
         return False
 
