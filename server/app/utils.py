@@ -26,13 +26,16 @@ def get_reviews(id: str, page: str) -> dict:
         if next_response.status_code != 200:
             next_page = False
 
-    # state_file = open("./store/state.json")
-    # state_data = json.load(state_file)
-    # state_file.close()
-    # state_data[id] = reviews
-    # state_file = open("./store/state.json", "w")
-    # json.dump(state_data, state_file)
-    # state_file.close()
+    state_file = open("./store/state.json")
+    state_data = json.load(state_file)
+    state_file.close()
+    state_data["data"] = reviews
+    state_data["page"] = page
+    state_data["appId"] = id
+    state_data["nextPage"] = next_page
+    state_file = open("./store/state.json", "w")
+    json.dump(state_data, state_file)
+    state_file.close()
 
     return {"reviews": reviews, "nextPage": next_page}
 
