@@ -29,7 +29,7 @@ function MainContainer() {
                 setPage(Number(data.page));
                 setNextPage(data.nextPage);
             }
-            // Passes default data in case there is no populated app state.
+            // Passes default values in case there is no populated app state.
             else {
                 setPage(1);
                 setFocused(apps[0].id);
