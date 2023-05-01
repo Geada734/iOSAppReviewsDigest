@@ -22,11 +22,11 @@ class AppReviews(Resource):
 
 class AppState(Resource):
     def get(self):
-        state_file = open("./store/state.json")
+        state_file = open("./store/state.json", "r")
         response = json.load(state_file)
         state_file.close()
 
-        return response      
+        return response
 
 api.add_resource(AppReviews, '/appReviews')
 api.add_resource(AppState, '/appState')
