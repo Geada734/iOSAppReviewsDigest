@@ -30,7 +30,7 @@ def get_reviews(id: str, page: str) -> dict:
     state_data = json.load(state_file)
     state_file.close()
     state_data["data"] = reviews
-    state_data["page"] = page
+    state_data["page"] = int(page)
     state_data["appId"] = id
     state_data["nextPage"] = next_page
     state_file = open("./store/state.json", "w")

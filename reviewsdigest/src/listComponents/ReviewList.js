@@ -6,11 +6,16 @@ import config from '../config/config.json'
 
 function ReviewList(props) {
     const [reviews, setReviews] = useState([]);
-    const [nextPage, setNextPage] = useState();
 
     useEffect(() => {
         setReviews([]);
-        fetchReviews();
+        if(props.reviewData){
+            setReviews(props.reviewData)
+            props.reviewAction(null);
+        }
+        else{
+            fetchReviews();
+        }
     }, [props.appId, props.page])
 
     function fetchReviews(){
@@ -18,7 +23,7 @@ function ReviewList(props) {
         .then(res => res.json())
         .then(data => {
             setReviews(data.reviews);
-            setNextPage(data.nextPage);
+            props.setNextPage(data.nextPage);
         })
         .catch(error => console.log("Error in REST response"))
 
@@ -39,7 +44,7 @@ function ReviewList(props) {
             <span className={classes.refresh} onClick={refreshReviews}>Refresh Feed</span>
             <br />
             <div class={classes.paginationControler}>
-                <PaginationControl page={props.page} nextPage={nextPage} pagingAction={props.paginationAction}/>
+                <PaginationControl page={props.page} nextPage={props.nextPage} pagingAction={props.paginationAction}/>
             </div>
             <ul className={classes.reviewList}>
                 {reviews.map(review => {
