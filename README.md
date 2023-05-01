@@ -17,15 +17,33 @@ Each review card displays the review content, rating, author, date (and MT time)
 
 ## Running the App
 
-### Flask server
-Go into the "server" directory, there is a "requirements.txt" file with the necessary pip requirements. 
+### Flask Server
+Go into the "server" directory, there is a "requirements.txt" file with the necessary pip requirements, run the following command: 
 
 `pip3 install -r requirements.txt`
 
 It is recommended to run the server and install the dependencies inside a Python virtual environment (my personal preference is [venv](https://docs.python.org/3/library/venv.html)).
 
-After installing the dependencies (if using a virtual environment, make sure it's active), run the server in the "app" subfolder, the app is contained in the "app.py" file.
+After installing the dependencies (if using a virtual environment, make sure it's active), run the server in the "app" subfolder, the app is contained in the "app.py" file:
 
 `python3 app/app.py`
 
-The backend server is now running.
+The backend server is now running. If using a virtual environment, make sure you deactivate it after closing the server with the `deactivate` command.
+
+### React UI
+
+Go into the "reviewsdigest" folder, and install the dependencies:
+
+`yarn install`
+
+And run the app:
+
+`yarn start`
+
+Make sure the server in the "config.json" file inside the "config" folder in the frontend project is set to the localhost port your backend server is currently running on (set by default to `http://localhost:5000`).
+
+## Troubleshooting
+Windows users might experience a problem when running the Flask server after installing the requirements where the Flask-Cors module is not recognized. Installing flask-cors separately using pip, usually solves this problem.
+
+`pip3 install flask-cors`
+
