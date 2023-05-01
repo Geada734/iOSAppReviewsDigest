@@ -1,8 +1,12 @@
 import classes from './ReviewCard.module.css'
 
+/* 
+* Layout used to display each component.    
+*/
 function ReviewCard(props) {
+    // Takes in a review as a prop, and renders every value into the card.
     return (
-        <div className={classes.appCard}>
+        <div className={classes.reviewCard}>
             <h2>{props.review.title}</h2>
             <div>
                 <span><i>{props.review.content}</i></span>
