@@ -24,9 +24,11 @@ Go into the "server" directory, there is a "requirements.txt" file with the nece
 
 It is recommended to run the server and install the dependencies inside a Python virtual environment (my personal preference is [venv](https://docs.python.org/3/library/venv.html)).
 
-After installing the dependencies (if using a virtual environment, make sure it's active), go the "app" subfolder and run the server", the app is contained in the "app.py" file:
+After installing the dependencies (if using a virtual environment, make sure it's active), go the "app" subfolder and run the server, the app is contained in the "app.py" file:
 
 `python3 app.py`
+
+It is necessary to run the "app.py" file from inside the app subfolder due to the file calls to the "state.json" file.
 
 The backend server is now running. If using a virtual environment, make sure you deactivate it after closing the server with the `deactivate` command.
 
