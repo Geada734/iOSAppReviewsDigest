@@ -20,7 +20,7 @@ def get_reviews(id: str, page: str) -> dict:
     if response.status_code != 200:
         # Return an empty array on an empty or errored
         # response.
-        return []
+        return {"reviews": [], "nextPage": False}
 
     data = response.json()["feed"]["entry"]
 
